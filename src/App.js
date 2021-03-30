@@ -1,5 +1,5 @@
 import React from 'react'
-import {getAll} from './BooksAPI'
+import {get, getAll, update} from './BooksAPI'
 import './App.css'
 import {
   BrowserRouter as Router,
@@ -7,22 +7,27 @@ import {
   Link
 } from "react-router-dom";
 import DisplaySearchedBooks from './DisplaySearchedBooks';
+import Book from './Book';
 
 
 class BooksApp extends React.Component {
   state = {
-    /**
-     * *DONE: Router/Route/Link are used in this requirement, completely gets rid of state.
-     * Instead of using this state variable to keep track of which page
-     * we're on, use the URL in the browser's address bar. This will ensure that
-     * users can use the browser's back and forward buttons to navigate between
-     * pages, as well as provide a good URL they can bookmark and share.
-     */
-    shelfedBooks: []
+    shelfedBooks: [],
   }
   
   componentDidMount() {
     getAll().then(shelfedBooks => this.setState({shelfedBooks}))
+  }
+  
+  addBookToShelf = ({shelf,book}) => {
+    console.log(shelf);
+    update(book,shelf).then(() => {
+      //console.log(book);
+      //this.setState({bookShelfChanged: book})
+      //this.setState(currShelf =>({shelfedBooks: [...currShelf.shelfedBooks,book]}))
+      //get(bookId)
+      getAll().then(shelfedBooks => this.setState({shelfedBooks}))
+    })
   }
   
   render() {
@@ -44,34 +49,15 @@ class BooksApp extends React.Component {
               </div>
               <div className="list-books-content">
                 {shelves.map(shelf => (
-                <div className="bookshelf" key={shelf.id}>
-                  <h2 className="bookshelf-title">{shelf.name}</h2>
-                  <div className="bookshelf-books">
-                    <ol className="books-grid">
-                      {shelfedBooks.filter( shelfedBook => shelfedBook.shelf === shelf.id)
-                      .map( book => (
-                        <li key={book.id}>
-                        <div className="book">
-                          <div className="book-top">
-                            <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: "url("+book.imageLinks.thumbnail+")" }}></div>
-                            <div className="book-shelf-changer">
-                              <select defaultValue={shelf.id}>
-                                <option value="move" disabled>Move to...</option>
-                                <option value="currentlyReading">Currently Reading</option>
-                                <option value="wantToRead">Want to Read</option>
-                                <option value="read">Read</option>
-                                <option value="none">None</option>
-                              </select>
-                            </div>
-                          </div>
-                          <div className="book-title">{book.title}</div>
-                          <div className="book-authors">{book.authors}</div>
-                        </div>
-                      </li>
-                      ))}
-                    </ol>
+                  <div className="bookshelf" key={shelf.id}>
+                    <h2 className="bookshelf-title">{shelf.name}</h2>
+                    <div className="bookshelf-books">
+                      <ol className="books-grid">
+                        {shelfedBooks.filter( shelfedBook => shelfedBook.shelf === shelf.id)
+                        .map( book => <Book key={book.id} book={book} addBookToShelf={this.addBookToShelf}/>)}
+                      </ol>
+                    </div>
                   </div>
-                </div>
                 ) )}
               </div>
               <div className="open-search">

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import {search} from './BooksAPI';
-import SearchBooks from "./SearchBooks";
+import SearchFunction from "./SearchFunction";
 import SearchedBookList from './SearchedBookList';
 
 export default class DisplaySearchedBooks extends Component {
@@ -30,7 +30,7 @@ export default class DisplaySearchedBooks extends Component {
 				<Link to='/' >
 					<button className="close-search">Close</button>
 				</Link>
-				<SearchBooks onSearchEntered={this.updateSearchResults}/>
+				<SearchFunction onSearchEntered={this.updateSearchResults}/>
 				</div>
 				<SearchedBookList books={searchedBooks} />
 			</div>

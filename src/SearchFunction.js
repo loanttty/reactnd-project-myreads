@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 //import escapeRegExp from 'escape-string-regexp';
 
-class SearchBooks extends Component {
+class SearchFunction extends Component {
 	state = {
 		query: ''
 	}
 	
 	updateQuery = event => {
 		this.setState({query:event.target.value});
-		//BooksAPI.getAll().then((books) => console.log(books)); books that are in one of three shelfs already
 		this.props.onSearchEntered(this.state.query);
 	}
 	render() {
@@ -32,4 +31,4 @@ class SearchBooks extends Component {
 	}
 }
 
-export default SearchBooks
+export default SearchFunction
