@@ -1,5 +1,5 @@
 import React from 'react'
-import {get, getAll, update} from './BooksAPI'
+import { getAll} from './BooksAPI'
 import './App.css'
 import {
   BrowserRouter as Router,
@@ -19,15 +19,11 @@ class BooksApp extends React.Component {
     getAll().then(shelfedBooks => this.setState({shelfedBooks}))
   }
   
-  addBookToShelf = ({shelf,book}) => {
-    console.log(shelf);
-    update(book,shelf).then(() => {
-      //console.log(book);
-      //this.setState({bookShelfChanged: book})
-      //this.setState(currShelf =>({shelfedBooks: [...currShelf.shelfedBooks,book]}))
-      //get(bookId)
-      getAll().then(shelfedBooks => this.setState({shelfedBooks}))
-    })
+  addBookToShelf = (shelfedBooks) => {
+    //update(book,shelf).then(() => {
+      this.setState({shelfedBooks})
+      console.log(this.state.shelfedBooks)
+    //})
   }
   
   render() {

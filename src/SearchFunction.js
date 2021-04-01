@@ -7,8 +7,9 @@ class SearchFunction extends Component {
 	}
 	
 	updateQuery = event => {
-		this.setState({query:event.target.value});
-		this.props.onSearchEntered(this.state.query);
+		this.setState({query:event.target.value},() => {
+			this.props.onSearchEntered(this.state.query);
+		});
 	}
 	render() {
 		return(

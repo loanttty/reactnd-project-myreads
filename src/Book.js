@@ -1,22 +1,50 @@
 import React, { Component } from 'react';
+import {update, getAll} from './BooksAPI';
 
 class Book extends Component {
 
 	state ={
-		shelf: this.props.book.shelf
+		shelfChanged: '',
+		shelfedBooks: []
 	}
 
 	updateShelf = event => {
-		const shelf = event.target.value
-		this.setState({shelf})
-		this.props.addBookToShelf({
-			shelf: this.state.shelf,
-			book:this.props.book})
+		/**
+		 * *One way is to pass shelf instead of this.state.shelf.
+		 * *Another way is to use the second parameter of the setState function. 
+		 * *The second parameter is a function that will be called after the state has updated
+		 */
+		const shelfChanged = event.target.value
+		this.setState({shelfChanged}, () => {
+			console.log(this.state.shelfChanged);
+			update(this.props.book,this.state.shelfChanged).then( () => {
+				getAll().then(shelfedBooks => 
+					this.setState({shelfedBooks}, () => this.props.addBookToShelf(this.state.shelfedBooks))
+				)
+			});
+		})
 	}
-
+	
 	render() {
 		const {book} = this.props;
-		console.log(this.state);
+		const booksOnShelfDefaultValue = (
+			<select onChange={this.updateShelf} defaultValue={book.shelf}>
+				<option value="move" disabled>Move to...</option>
+				<option value="currentlyReading">Currently Reading</option>
+				<option value="wantToRead">Want to Read</option>
+				<option value="read">Read</option>
+				<option value="none">None</option>
+			</select>
+		)
+		const booksOnSearchDefaultValue = (
+			<select onChange={this.updateShelf} defaultValue="none">
+				<option value="move" disabled>Move to...</option>
+				<option value="currentlyReading">Currently Reading</option>
+				<option value="wantToRead">Want to Read</option>
+				<option value="read">Read</option>
+				<option value="none">None</option>
+			</select>
+		)
 		return (
 			<div>
 				<li key={book.id}>
@@ -24,13 +52,7 @@ class Book extends Component {
 							<div className="book-top">
 								<div className="book-cover" style={{ width: 128, height: 192, backgroundImage: "url("+book.imageLinks.thumbnail+")"}}></div>
 								<div className="book-shelf-changer">
-									<select onChange={this.updateShelf} value={this.state.shelf}>
-										<option value="move" disabled>Move to...</option>
-										<option value="currentlyReading">Currently Reading</option>
-										<option value="wantToRead">Want to Read</option>
-										<option value="read">Read</option>
-										<option value="none">None</option>
-									</select>
+									{book.shelf !== undefined ? booksOnShelfDefaultValue : booksOnSearchDefaultValue}
 								</div>
 							</div>
 							<div className="book-title">{book.title}</div>
