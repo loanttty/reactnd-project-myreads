@@ -14,10 +14,9 @@ export default class DisplaySearchedBooks extends Component {
 		search(query).then(data => {
 			this.setState(() => {
 				const searchResults = data
-
-				if (searchResults === undefined) {return {searchedBooks: []}}
+				
+				if (searchResults === undefined) {return {searchedBooks: [], error: false}}
 				if (searchResults.error) {return {searchedBooks: [], error: true}} //handle "empty query"
-				if (query === '' || query === null || query === undefined) {return {searchedBooks: []}}
 				
 				if (query.length >= 1) {
 					const {shelfedBooks} = this.props
