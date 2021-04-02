@@ -44,18 +44,20 @@ class Book extends Component {
 				<option value="none">None</option>
 			</select>
 		)
-		const imgAvailable = (
-			<div className="book-cover" style={{ width: 128, height: 192, backgroundImage: "url("+book.imageLinks.thumbnail+")"}}></div>
-		)
-		const imgNotAvailable = (
-			<div className="book-cover" style={{ width: 128, height: 192}}>Hehe</div>
-		)
+		let thumnail = (
+			<div className="book-cover" style={{ width: 128, height: 192}}>Image Not Available</div>
+			)
+		if (book.imageLinks !== undefined) {
+			thumnail = (
+				<div className="book-cover" style={{ width: 128, height: 192, backgroundImage: "url("+book.imageLinks.thumbnail+")"}}></div>
+			)
+		}
 		return (
 			<div>
 				<li key={book.id}>
 						<div className="book">
 							<div className="book-top">
-								{book.imageLinks !== undefined ? imgAvailable : imgNotAvailable}
+								{thumnail}
 								<div className="book-shelf-changer">
 									{book.shelf !== undefined ? booksOnShelfDefaultValue : booksOnSearchDefaultValue}
 								</div>
