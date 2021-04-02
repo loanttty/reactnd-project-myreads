@@ -20,10 +20,7 @@ class BooksApp extends React.Component {
   }
   
   addBookToShelf = (shelfedBooks) => {
-    //update(book,shelf).then(() => {
       this.setState({shelfedBooks})
-      console.log(this.state.shelfedBooks)
-    //})
   }
   
   render() {
@@ -64,7 +61,7 @@ class BooksApp extends React.Component {
             </div>
           )} />
           
-          <Route path='/search' component={DisplaySearchedBooks} />
+          <Route path='/search' render={() => <DisplaySearchedBooks shelfedBooks={shelfedBooks} addBookToShelf={this.addBookToShelf}/>} />
         </div>
       </Router>
     )
