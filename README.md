@@ -4,8 +4,8 @@ This is a book tracking application with these functionalities below:
 1. Front Page:
     Keep track of books on shelves, which are "Want To Read", "Currently Reading", "Read". Shelf reallocation or shelf removal of any books will be reflected immediately.
 2. Search Page:
-    a. Allow to search books with key words (refer to SEARCH_TERMS.md) and return books with their shelf status, i.e on which shelf in particular or not assigned to any shelf.
-    b. Allow to assign or reassign the shelf of any book populated during searching and reflect such changes in both Search page and Front Page
+    * Allow to search books with key words (refer to SEARCH_TERMS.md) and return books with their shelf status, i.e on which shelf in particular or not assigned to any shelf.
+    * Allow to assign or reassign the shelf of any book populated during searching and reflect such changes in both Search page and Front Page
 
 ## TL;DR
 
