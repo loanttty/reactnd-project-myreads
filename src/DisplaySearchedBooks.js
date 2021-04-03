@@ -52,7 +52,7 @@ export default class DisplaySearchedBooks extends Component {
 			<div className="search-books">
 				<div className="search-books-bar">
 					<Link to='/' >
-						<button className="close-search">Close</button>
+						<span className="close-search">Close</span>
 					</Link>
 					<SearchFunction onSearchEntered={this.updateSearchResults}/>
 				</div>
